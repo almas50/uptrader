@@ -1,0 +1,29 @@
+<ul>
+  {% for node in menu_items %}
+    <li class="menu-item">
+      <a href="#"
+         {% if node.active %}style="font-weight: bold;"{% endif %}
+         onclick="event.preventDefault(); toggleMenu(this);">
+        {{ node.item.title }}
+      </a>
+      {% if node.children %}
+        <ul class="sub-menu" style="display: {% if node.expanded %}block{% else %}none{% endif %};">
+          {% include "menu/menu.html" with menu_items=node.children %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+<script>
+  function toggleMenu(element) {
+    const subMenu = element.parentElement.querySelector('.sub-menu');
+    if (subMenu) {
+      if (subMenu.style.display === 'none') {
+        subMenu.style.display = 'block';
+      } else {
+        subMenu.style.display = 'none';
+      }
+    }
+  }
+</script>
